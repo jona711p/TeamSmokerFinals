@@ -1,4 +1,5 @@
-# Team Smoker's Eksamens Notater & Opgaver
+# Team Smoker's:
+# Eksamens Notater & Opgaver
 
 Claus Nedergaard
 Jonas Lykke
