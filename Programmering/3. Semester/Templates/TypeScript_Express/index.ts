@@ -9,7 +9,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
-// Init & Start Server
+// Start Express Server
 let port = (process.env.PORT || 3000);
 app.listen(port);
 console.log(`Server Listening on Port: ${port}`);
