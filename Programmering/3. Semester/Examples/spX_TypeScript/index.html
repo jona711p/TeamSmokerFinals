@@ -1,0 +1,145 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Chuck & Dad Jokes</title>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</head>
+
+<body>
+
+    <div class="row" style="width:800px; margin:0 auto;">
+        <br />
+        <label>Chuck Joke:</label>
+        <br />
+        <div class="col-md-10">
+            <div id="chuckJoke"></div>
+            <br />
+            <button class="btn btn-default" id="chuckBest" type="button">Chuck Joken var den Bedste!</button>
+        </div>
+    </div>
+
+    <div class="row" style="width:800px; margin:0 auto;">
+        <br />
+        <label>Dad Joke:</label>
+        <br />
+        <div class="col-md-10">
+            <div id="dadJoke"></div>
+            <br />
+            <button class="btn btn-default" id="dadBest" type="button">Dad Joken var den Bedste!</button>
+        </div>
+    </div>
+
+    <div class="row" style="width:1100px; margin:0 auto;">
+        <br />
+        <div class="col-md-offset-2 col-md-10">
+            <button class="btn btn-default" id="newJokes" type="button">Få Nye Jokes!</button>
+        </div>
+    </div>
+
+</body>
+
+<script>
+    $("#newJokes").click(function () {
+        getJokes();
+    });
+</script>
+
+<script>
+    let chuckjoke;
+    let dadjoke;
+
+    function getJokes() {
+
+        getChuckJoke();
+        getDadJoke();
+    };
+
+
+    function getChuckJoke() {
+
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:3000/chuckJoke",
+            success: function (data) {
+
+                console.log(data.joke);
+
+                chuckjoke = {
+                    joke: data.joke,
+                    id: data.id
+                }
+
+                let div = document.getElementById("chuckJoke");
+
+                div.innerText = data.joke;
+            }
+        })
+    };
+
+
+    function getDadJoke() {
+
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:3000/dadJoke",
+            success: function (data) {
+
+                console.log(data.joke);
+
+                dadjoke = {
+                    joke: data.joke,
+                    id: data.id
+                }
+
+                let div = document.getElementById("dadJoke");
+
+                div.innerText = data.joke;
+            }
+        })
+    };
+
+
+    function upvoteChuckJoke() {
+
+        $.ajax({
+            type: "PUT",
+            url: "http://localhost:3000/upvoteDadJoke/" + chuckjoke.id,
+            success: function (data) {
+                getJokes();
+            }
+        })
+    };
+
+
+    function upvoteDadJoke() {
+
+        $.ajax({
+            type: "PUT",
+            url: "http://localhost:3000/upvoteDadJoke/" + dadjoke.id,
+            success: function (data) {
+                getJokes();
+            }
+        })
+    };
+
+
+    $("#chuckBest").click(function () {
+        upvoteChuckJoke();
+    });
+
+
+    $("#dadBest").click(function () {
+        upvoteDadJoke();
+    });
+
+
+    window.onload = getJokes();
+</script>
+
+</html>
