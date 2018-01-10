@@ -1,0 +1,71 @@
+﻿@model IEnumerable<spX_CSharp_MVC.Models.Joke>
+
+@{
+    ViewBag.Title = "Spørgsmål X";
+}
+
+<h3>Spørgsmål X</h3>
+
+<p>
+    @Html.ActionLink("Få Nye Jokes!", "Index")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Origin)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Value)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Origin)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Value)
+            </td>
+            <td>
+                @Html.ActionLink("Denne Joke var den Bedste!", "SaveJoke", new { id = item.ID })
+            </td>
+        </tr>
+    }
+
+</table>
+
+<h3>Gemte Jokes</h3>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Origin)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Value)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TimeStamp)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in ViewBag.jokes)
+    {
+        <tr>
+            <td>
+                @item.Origin
+            </td>
+            <td>
+                @item.Value
+            </td>
+            <td>
+                @item.TimeStamp
+            </td>
+        </tr>
+    }
+
+</table>
